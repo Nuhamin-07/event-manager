@@ -1,4 +1,5 @@
 import { getSession } from "@/lib/auth/server";
+import { DashboardContent } from "@/components/DashboardContent";
 
 export default async function DashboardPage() {
   const session = await getSession();
