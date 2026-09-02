@@ -14,7 +14,7 @@ datasource db {
 
 model Event {
   id String @id @default(uuid()) @db.Uuid
-  ownerUserId String  @map("owner_user_id)
+  ownerUserId String @map("owner_user_id)
   title String
   description String?
   location String?
@@ -22,6 +22,19 @@ model Event {
   createdAt DateTime @default(now()) @map("created_at") @db.TimeStampz(6)
   updatedAt DateTime @default(now()) @updatedAt @map("updated_at") @db.TimeStampz(6)
 
+  invite EventInvite?
+
   @@index([ownerUserId, createdAt(sort: Desc)], map: "idx_events_owner")
   @@map ("events")
+}
+
+model EventInvite {
+  id String @id @default(uuid()) @db.Uuid
+  eventId String @unique @map("event_id") @db.Uuid
+  token String @unique
+  createdAt DateTime @default(now()) @map("created_at") @db.TimeStampz(6)
+
+  event Event @relation(fields: [eventId], references: [id], onDelete: Cascade)
+
+  @@map("event_invites")
 }
