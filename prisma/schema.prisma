@@ -20,13 +20,13 @@ enum RsvpStatus {
 
 model Event {
   id String @id @default(uuid()) @db.Uuid
-  ownerUserId String @map("owner_user_id)
+  ownerUserId String @map("owner_user_id")
   title String
   description String?
   location String?
-  eventDate DateTime? @map("event_date") @db.TimeStampz(6)
-  createdAt DateTime @default(now()) @map("created_at") @db.TimeStampz(6)
-  updatedAt DateTime @default(now()) @updatedAt @map("updated_at") @db.TimeStampz(6)
+  eventDate DateTime? @map("event_date") @db.Timestamptz(6)
+  createdAt DateTime @default(now()) @map("created_at") @db.Timestamptz(6)
+  updatedAt DateTime @default(now()) @updatedAt @map("updated_at") @db.Timestamptz(6)
 
   invite EventInvite?
 
@@ -38,7 +38,7 @@ model EventInvite {
   id String @id @default(uuid()) @db.Uuid
   eventId String @unique @map("event_id") @db.Uuid
   token String @unique
-  createdAt DateTime @default(now()) @map("created_at") @db.TimeStampz(6)
+  createdAt DateTime @default(now()) @map("created_at") @db.Timestamptz(6)
 
   event Event @relation(fields: [eventId], references: [id], onDelete: Cascade)
 
@@ -51,13 +51,13 @@ model EventRsvp {
   inviteId String? @map("invite_id") @db.Uuid
   name String
   email String
-  emailNormalized String @default(dbgenerated("LOWER(email)")) @map("email_normalized")
+  emailNormalized String @map("email_normalized")
   status RsvpStatus
-  respondedAt DateTime @default(now()) @map("responded_at") @db.TimeStampz(6)
-  createdAt DateTime @default(now()) @map("created_at") @db.TimeStampz(6)
-  updatedAt DateTime @default(now()) @updatedAt @map("updated_at") @db.TimeStampz(6)
+  respondedAt DateTime @default(now()) @map("responded_at") @db.Timestamptz(6)
+  createdAt DateTime @default(now()) @map("created_at") @db.Timestamptz(6)
+  updatedAt DateTime @default(now()) @updatedAt @map("updated_at") @db.Timestamptz(6)
 
- @@unique([eventId, emailNormalized])
-  @@index([ownerUserId, respondedAt(sort: Desc)], map: "idx_rsvps_event")
+  @@unique([eventId, emailNormalized])
+  @@index([eventId, respondedAt(sort: Desc)], map: "idx_rsvps_event")
   @@map ("event_rsvps")
 }
