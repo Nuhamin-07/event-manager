@@ -11,3 +11,17 @@ generator client {
 datasource db {
   provider = "postgresql"
 }
+
+model Event {
+  id String @id @default(uuid()) @db.Uuid
+  ownerUserId String  @map("owner_user_id)
+  title String
+  description String?
+  location String?
+  eventDate DateTime? @map("event_date") @db.TimeStampz(6)
+  createdAt DateTime @default(now()) @map("created_at") @db.TimeStampz(6)
+  updatedAt DateTime @default(now()) @updatedAt @map("updated_at") @db.TimeStampz(6)
+
+  @@index([ownerUserId, createdAt(sort: Desc)], map: "idx_events_owner")
+  @@map ("events")
+}
