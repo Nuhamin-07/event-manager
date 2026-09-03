@@ -3,5 +3,5 @@ import { DashboardContent } from "@/components/DashboardContent";
 
 export default async function DashboardPage() {
   const session = await getSession();
-  return <DashboardContent userId={session.data?.user.id} />;
+  return <DashboardContent userId={session.data?.user.id as string} />;
 }
