@@ -12,7 +12,7 @@ export async function DashboardContent({ userId }: { userId: string }) {
           </p>
         </div>
         <Button asChild>
-          <Link href="/event/new">Create Event</Link>
+          <Link href="/events/new">Create Event</Link>
         </Button>
       </div>
     </div>
