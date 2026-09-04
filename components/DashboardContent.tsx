@@ -13,6 +13,7 @@ export async function DashboardContent({ userId }: { userId: string }) {
       title: true,
       eventDate: true,
       location: true,
+      rsvps: { select: { status: true } },
     },
   });
 
