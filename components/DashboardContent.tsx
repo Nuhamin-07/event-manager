@@ -47,13 +47,13 @@ export async function DashboardContent({ userId }: { userId: string }) {
           </CardContent>
         </Card>
       ) : (
-        <div>
+        <div className="grid gap-4 md:grid-cols-2">
           {events.map((event) => (
             <Card key={event.id}>
-              <CardHeader>
-                <div>
-                  <CardTitle>{event.title}</CardTitle>
-                  <Button asChild>
+              <CardHeader className="space-y-3">
+                <div className="flex items-start justify-between gap-2">
+                  <CardTitle className="text-lg">{event.title}</CardTitle>
+                  <Button size="sm" asChild>
                     <Link href={`events/${event.id}`}>Open</Link>
                   </Button>
                 </div>
