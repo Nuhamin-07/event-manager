@@ -1,3 +1,4 @@
+import { EventDetailContent } from "@/components/EventDetailContent";
 import { getSession } from "@/lib/auth/server";
 
 export default async function EventDetailPage({
@@ -8,6 +9,9 @@ export default async function EventDetailPage({
   const { eventId } = await params;
   const session = await getSession();
   return (
-    <EventDetailContent userId={session.data?.user.id} eventId={eventId} />
+    <EventDetailContent
+      userId={session.data?.user.id as string}
+      eventId={eventId}
+    />
   );
 }

@@ -74,9 +74,9 @@ export async function DashboardContent({ userId }: { userId: string }) {
                   </Button>
                 </div>
                 <div>
-                  <Badge variant="secondary">Going: {event.goingCount}</Badge>
+                  <Badge>Going: {event.goingCount}</Badge>
                   <Badge variant="secondary">Maybe: {event.maybeCount}</Badge>
-                  <Badge variant="secondary">
+                  <Badge variant="outline">
                     Not Going: {event.notGoingCount}
                   </Badge>
                 </div>

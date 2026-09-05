@@ -1,6 +1,11 @@
 import { prisma } from "@/lib/prisma";
 import { notFound } from "next/navigation";
 import { countByStatus } from "./DashboardContent";
+import { Button } from "./ui/button";
+import Link from "next/link";
+import { Badge } from "./ui/badge";
+import { Card, CardContent, CardHeader } from "./ui/card";
+import { Form } from "./ui/form";
 
 export async function EventDetailContent({
   userId,
@@ -39,5 +44,52 @@ export async function EventDetailContent({
     maybeCount: counts.maybeCount,
     notGoingCount: counts.notGoingCount,
   };
-  return <div></div>;
+
+  const createInviteActionForEvent = createInviteLinkAction.bind(
+    null,
+    event.id,
+  );
+  return (
+    <div className="flex flex-col gap-6">
+      <div className="flex flex-wrap items-start justify-between gap-3">
+        <div className="space-y-2">
+          <h1 className="text-2xl font-semibold tracking-tight">
+            {event.title}
+          </h1>
+          <p>
+            {event.eventDate
+              ? new Date(event.eventDate).toLocaleDateString()
+              : "No Date"}
+
+            {event.location ? `-${event.location}` : ""}
+          </p>
+          {event.description && (
+            <p className="max-w-2xl text-sm text-muted-foreground">
+              {event.description}
+            </p>
+          )}
+        </div>
+        <Button asChild variant="outline">
+          <Link href="/dashboard">Back</Link>
+        </Button>
+      </div>
+      <div className="flex flex-wrap gap-2 text-xs">
+        <Badge>Going: {event.goingCount}</Badge>
+        <Badge variant="secondary">Maybe: {event.maybeCount}</Badge>
+        <Badge variant="outline">Not Going: {event.notGoingCount}</Badge>
+      </div>
+      <Card>
+        <CardHeader>Invite Link</CardHeader>
+        <CardContent className="space-y-3">
+          <p>
+            Share this link to guests so that they can RSVP without createing an
+            account.
+          </p>
+          <form action={createInviteActionForEvent}>
+            <Button type="submit">Generate Link</Button>
+          </form>
+        </CardContent>
+      </Card>
+    </div>
+  );
 }
