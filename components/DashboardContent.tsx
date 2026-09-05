@@ -5,7 +5,7 @@ import { Card, CardContent, CardHeader, CardTitle } from "./ui/card";
 import { Badge } from "./ui/badge";
 import { type RsvpStatus as PrismaRsvpStatus } from "@/app/generated/prisma/enums";
 
-function countByStatus(rsvps: { status: PrismaRsvpStatus }[]) {
+export function countByStatus(rsvps: { status: PrismaRsvpStatus }[]) {
   let goingCount = 0;
   let maybeCount = 0;
   let notGoingCount = 0;
