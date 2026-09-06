@@ -13,3 +13,7 @@ export default async function proxy(req: NextRequest) {
   const { auth } = await import("@/lib/auth/server");
   return auth.middleware({ loginUrl: "/auth/signi-in" })(req);
 }
+
+export const config = {
+  matcher: ["/dashboard/:path", "/events/:path"],
+};
