@@ -6,6 +6,7 @@ import Link from "next/link";
 import { Badge } from "./ui/badge";
 import { Card, CardContent, CardHeader } from "./ui/card";
 import { Form } from "./ui/form";
+import { createInviteLinkAction } from "@/lib/actions/events";
 
 export async function EventDetailContent({
   userId,
