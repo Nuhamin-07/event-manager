@@ -42,6 +42,12 @@ export async function createEventAction(formData: FormData) {
   }
 }
 
+const RSVP_STATUSES = ["going", "maybe", "not_going"] as const;
+
+function isRsvpStatus(s: string): s is RsvpStatus {
+  return (RSVP_STATUSES as readonly string[]).includes(s);
+}
+
 function parseRsvp(formData: FormData) {
   const name = String(formData.get("name") ?? "").trim();
   if (name.length < 2 || name.length > 120) {
@@ -52,7 +58,7 @@ function parseRsvp(formData: FormData) {
     throw new Error("Please enter a valid email.");
   }
   const status = String(formData.get("status") ?? "").trim();
-  if (!RsvpStatus(status)) {
+  if (!isRsvpStatus(status)) {
     throw new Error("Invalid RSVP status.");
   }
   return { name, email, status };
