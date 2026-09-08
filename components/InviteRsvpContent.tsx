@@ -7,6 +7,7 @@ import { type RsvpStatus as PrismaRsvpStatus } from "@/app/generated/prisma/enum
 import { notFound } from "next/navigation";
 import { Label } from "./ui/label";
 import { Input } from "./ui/input";
+import { submitOrUpdateRsvpAction } from "@/lib/actions/events";
 
 export async function InviteRsvpContent({
   token,
