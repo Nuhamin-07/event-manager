@@ -3,6 +3,7 @@
 import { redirect } from "next/navigation";
 import { getSession } from "../auth/server";
 import { prisma } from "../prisma";
+import { RsvpStatus } from "@/app/generated/prisma/enums";
 
 function parseCreateEvent(formData: FormData) {
   const title = String(formData.get("title") ?? "").trim();
@@ -39,6 +40,22 @@ export async function createEventAction(formData: FormData) {
   } catch (err) {
     console.error(err);
   }
+}
+
+function parseRsvp(formData: FormData) {
+  const name = String(formData.get("name") ?? "").trim();
+  if (name.length < 2 || name.length > 120) {
+    throw new Error("Name must be between 2 and 120 characters.");
+  }
+  const email = String(formData.get("email") ?? "").trim();
+  if (email.length < 3 || email.length > 320 || !email.includes("@")) {
+    throw new Error("Please enter a valid email.");
+  }
+  const status = String(formData.get("status") ?? "").trim();
+  if (!RsvpStatus(status)) {
+    throw new Error("Invalid RSVP status.");
+  }
+  return { name, email, status };
 }
 
 export async function createInviteLinkAction(eventId: string) {
