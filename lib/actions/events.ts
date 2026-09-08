@@ -61,3 +61,10 @@ export async function createInviteLinkAction(eventId: string) {
     update: { token },
   });
 }
+
+export async function submitOrUpdateRsvpAction(
+  token: string,
+  formData: FormData,
+) {
+  const input = parseRsvp(formData);
+}

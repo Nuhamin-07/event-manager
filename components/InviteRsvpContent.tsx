@@ -42,6 +42,8 @@ export async function InviteRsvpContent({
     eventDate: e.eventDate ? e.eventDate.toISOString() : null,
   };
 
+  const submitRsvpForToken = submitOrUpdateRsvpAction.bind(null, token);
+
   return (
     <div className="flex flex-1 flex-col gap-6">
       <Card>
@@ -66,10 +68,7 @@ export async function InviteRsvpContent({
               Thanks. Your RSVP has been recorded.
             </p>
           ) : (
-            <form
-              //   action={submitInviteAction}
-              className="space-y-6"
-            >
+            <form action={submitRsvpForToken} className="space-y-6">
               <div className="space-y-2">
                 <Label htmlFor="name">Name</Label>
                 <Input
