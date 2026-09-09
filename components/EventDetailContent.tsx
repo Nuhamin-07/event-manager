@@ -4,7 +4,7 @@ import { countByStatus } from "./DashboardContent";
 import { Button } from "./ui/button";
 import Link from "next/link";
 import { Badge } from "./ui/badge";
-import { Card, CardContent, CardHeader } from "./ui/card";
+import { Card, CardContent, CardHeader, CardTitle } from "./ui/card";
 import { Form } from "./ui/form";
 import { createInviteLinkAction } from "@/lib/actions/events";
 
@@ -45,6 +45,26 @@ export async function EventDetailContent({
     maybeCount: counts.maybeCount,
     notGoingCount: counts.notGoingCount,
   };
+
+  const RsvpRows = await prisma.eventRsvp.findMany({
+    where: { eventId },
+    orderBy: { respondedAt: "desc" },
+    select: {
+      id: true,
+      name: true,
+      email: true,
+      status: true,
+      respondedAt: true,
+    },
+  });
+
+  const rsvps = RsvpRows.map((r) => ({
+    id: r.id,
+    name: r.name,
+    email: r.email,
+    status: r.status,
+    respondedAt: r.respondedAt.toISOString(),
+  }));
 
   const createInviteActionForEvent = createInviteLinkAction.bind(
     null,
@@ -101,6 +121,18 @@ export async function EventDetailContent({
           <form action={createInviteActionForEvent}>
             <Button type="submit">Generate Link</Button>
           </form>
+        </CardContent>
+      </Card>
+      <Card>
+        <CardHeader>
+          <CardTitle>Attendees</CardTitle>
+        </CardHeader>
+        <CardContent>
+          {rsvps.length === 0 ? (
+            <p className="text-sm text-(--muted-foreground)"></p>
+          ) : (
+            <></>
+          )}
         </CardContent>
       </Card>
     </div>
