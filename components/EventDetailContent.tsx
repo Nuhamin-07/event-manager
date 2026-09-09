@@ -7,6 +7,14 @@ import { Badge } from "./ui/badge";
 import { Card, CardContent, CardHeader, CardTitle } from "./ui/card";
 import { Form } from "./ui/form";
 import { createInviteLinkAction } from "@/lib/actions/events";
+import {
+  Table,
+  TableBody,
+  TableCell,
+  TableHead,
+  TableHeader,
+  TableRow,
+} from "./ui/table";
 
 export async function EventDetailContent({
   userId,
@@ -129,9 +137,38 @@ export async function EventDetailContent({
         </CardHeader>
         <CardContent>
           {rsvps.length === 0 ? (
-            <p className="text-sm text-(--muted-foreground)"></p>
+            <p className="text-sm text-(--muted-foreground)">
+              No responses yet.
+            </p>
           ) : (
-            <></>
+            <Table>
+              <TableHeader>
+                <TableRow>
+                  <TableHead>Name</TableHead>
+                  <TableHead>Email</TableHead>
+                  <TableHead>Status</TableHead>
+                  <TableHead>Updated At</TableHead>
+                </TableRow>
+              </TableHeader>
+              <TableBody>
+                {rsvps.map((rsvp) => (
+                  <TableRow key={rsvp.id}>
+                    <TableCell>{rsvp.name}</TableCell>
+                    <TableCell>{rsvp.email}</TableCell>
+                    <TableCell>
+                      <Badge variant="secondary">
+                        {rsvp.status === "not_going"
+                          ? "Not Going"
+                          : rsvp.status}
+                      </Badge>
+                    </TableCell>
+                    <TableCell>
+                      {new Date(rsvp.respondedAt).toLocaleDateString()}
+                    </TableCell>
+                  </TableRow>
+                ))}
+              </TableBody>
+            </Table>
           )}
         </CardContent>
       </Card>
