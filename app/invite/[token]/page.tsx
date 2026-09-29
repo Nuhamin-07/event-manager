@@ -13,6 +13,6 @@ export default async function InvitePage({
   const query = await searchParams;
   const session = await getSession();
   return (
-    <InviteRsvpContent token={token} submitted={(query.submitted = "1")} />
+    <InviteRsvpContent token={token} submitted={query.submitted === "1"} />
   );
 }

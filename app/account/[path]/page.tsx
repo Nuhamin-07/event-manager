@@ -11,8 +11,10 @@ export default async function AccountPage({
 }) {
   const { path } = await params;
   return (
-    <main className="container p-4 md:p-6">
-      <AccountView path={path} />
-    </main>
+    <div className="mx-auto w-full max-w-3xl py-6">
+      <div className="rounded-2xl border border-white/10 bg-[#14141f]/90 p-6 sm:p-8 shadow-2xl backdrop-blur-md">
+        <AccountView path={path} />
+      </div>
+    </div>
   );
 }
