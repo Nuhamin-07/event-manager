@@ -172,6 +172,19 @@ button[aria-haspopup="menu"]:hover,
   color: #ffffff !important;
 }
 
+/* Custom Date & Time Picker Dark Mode Color Scheme */
+input[type="datetime-local"]::-webkit-calendar-picker-indicator {
+  filter: invert(0.9) sepia(1) saturate(5) hue-rotate(220deg);
+  cursor: pointer;
+  padding: 4px;
+  border-radius: 6px;
+  transition: opacity 0.2s ease;
+}
+
+input[type="datetime-local"]::-webkit-calendar-picker-indicator:hover {
+  opacity: 0.8;
+}
+
 @layer base {
   * {
     @apply border-border outline-ring/50;
@@ -183,3 +196,4 @@ button[aria-haspopup="menu"]:hover,
     @apply font-sans scroll-smooth;
   }
 }
+

@@ -1,7 +1,7 @@
 import { prisma } from "@/lib/prisma";
 import { Button } from "./ui/button";
 import Link from "next/link";
-import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "./ui/card";
+import { Card, CardContent } from "./ui/card";
 import { Badge } from "./ui/badge";
 import { notFound } from "next/navigation";
 import { Label } from "./ui/label";
@@ -180,7 +180,7 @@ export async function InviteRsvpContent({
                   defaultValue="going"
                 >
                   <option value="going" className="bg-zinc-900 text-emerald-400 font-medium">
-                    🎉 Yes, I'm Going
+                    🎉 Yes, I am Going
                   </option>
                   <option value="maybe" className="bg-zinc-900 text-amber-400 font-medium">
                     🤔 Maybe / Unsure

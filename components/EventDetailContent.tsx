@@ -7,14 +7,7 @@ import { Badge } from "./ui/badge";
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "./ui/card";
 import { createInviteLinkAction } from "@/lib/actions/events";
 import { CopyLinkButton } from "./CopyLinkButton";
-import {
-  Table,
-  TableBody,
-  TableCell,
-  TableHead,
-  TableHeader,
-  TableRow,
-} from "./ui/table";
+import { AttendeeTable } from "./AttendeeTable";
 import {
   ArrowLeft,
   Calendar,
@@ -24,9 +17,6 @@ import {
   CheckCircle2,
   HelpCircle,
   XCircle,
-  Clock,
-  Mail,
-  User,
   Sparkles,
 } from "lucide-react";
 
@@ -215,7 +205,7 @@ export async function EventDetailContent({
 
       {/* Attendees Table Card */}
       <Card>
-        <CardHeader className="flex flex-row items-center justify-between space-y-0">
+        <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
           <div className="flex items-center gap-2">
             <UserCheck className="h-5 w-5 text-indigo-400" />
             <CardTitle className="text-lg font-semibold">Attendee Responses</CardTitle>
@@ -226,92 +216,7 @@ export async function EventDetailContent({
         </CardHeader>
 
         <CardContent className="pt-4">
-          {rsvps.length === 0 ? (
-            <div className="flex flex-col items-center justify-center text-center py-12 px-4">
-              <div className="flex h-12 w-12 items-center justify-center rounded-xl bg-white/5 text-zinc-500 mb-3">
-                <UserCheck className="h-6 w-6" />
-              </div>
-              <p className="text-sm font-medium text-zinc-300">No responses recorded yet</p>
-              <p className="text-xs text-zinc-500 max-w-sm mt-1">
-                Share your guest invite link above to start collecting attendee RSVPs.
-              </p>
-            </div>
-          ) : (
-            <Table>
-              <TableHeader>
-                <TableRow>
-                  <TableHead>Attendee</TableHead>
-                  <TableHead>Email</TableHead>
-                  <TableHead>Status</TableHead>
-                  <TableHead>Responded At</TableHead>
-                </TableRow>
-              </TableHeader>
-              <TableBody>
-                {rsvps.map((rsvp) => {
-                  const statusVariant =
-                    rsvp.status === "going"
-                      ? "going"
-                      : rsvp.status === "maybe"
-                      ? "maybe"
-                      : "notGoing";
-
-                  const statusLabel =
-                    rsvp.status === "going"
-                      ? "Going"
-                      : rsvp.status === "maybe"
-                      ? "Maybe"
-                      : "Not Going";
-
-                  const initials = rsvp.name
-                    ? rsvp.name
-                        .split(" ")
-                        .map((n) => n[0])
-                        .join("")
-                        .substring(0, 2)
-                        .toUpperCase()
-                    : "?";
-
-                  return (
-                    <TableRow key={rsvp.id}>
-                      <TableCell>
-                        <div className="flex items-center gap-3">
-                          <div className="flex h-8 w-8 items-center justify-center rounded-full bg-purple-600/20 text-xs font-semibold text-purple-300 ring-1 ring-purple-500/30">
-                            {initials}
-                          </div>
-                          <span className="font-medium text-white">{rsvp.name}</span>
-                        </div>
-                      </TableCell>
-                      <TableCell>
-                        <div className="flex items-center gap-2 text-zinc-400">
-                          <Mail className="h-3.5 w-3.5 text-zinc-500" />
-                          <span>{rsvp.email}</span>
-                        </div>
-                      </TableCell>
-                      <TableCell>
-                        <Badge variant={statusVariant} className="capitalize">
-                          {statusLabel}
-                        </Badge>
-                      </TableCell>
-                      <TableCell>
-                        <div className="flex items-center gap-1.5 text-xs text-zinc-400">
-                          <Clock className="h-3.5 w-3.5 text-zinc-500" />
-                          <span>
-                            {new Date(rsvp.respondedAt).toLocaleDateString("en-US", {
-                              month: "short",
-                              day: "numeric",
-                              year: "numeric",
-                              hour: "2-digit",
-                              minute: "2-digit",
-                            })}
-                          </span>
-                        </div>
-                      </TableCell>
-                    </TableRow>
-                  );
-                })}
-              </TableBody>
-            </Table>
-          )}
+          <AttendeeTable rsvps={rsvps} />
         </CardContent>
       </Card>
     </div>
